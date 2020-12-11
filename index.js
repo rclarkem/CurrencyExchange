@@ -15,17 +15,20 @@ function calculate() {
     .then((response) => {
       const rateOfSecond = response.rates[currency_two];
       amountTwo.value = (amountOne.value * rateOfSecond).toFixed(2);
-      innerTextOfConversion(currency_one, currency_two, rateOfSecond);
+      rate.innerText = `1 ${currency_one} = ${rateOfSecond} ${currency_two} `;
     });
-}
-
-function innerTextOfConversion(currency_one, currency_two, rateOfSecond) {
-  rate.innerText = `1 ${currency_one} = ${rateOfSecond} ${currency_two} `;
 }
 
 currencyEleOne.addEventListener('change', calculate);
 amountOne.addEventListener('input', calculate);
 currencyEleTwo.addEventListener('change', calculate);
 amountTwo.addEventListener('input', calculate);
+
+swap.addEventListener('click', () => {
+  const temp = currencyEleOne.value;
+  currencyEleOne.value = currencyEleTwo.value;
+  currencyEleTwo.value = temp;
+  calculate();
+});
 
 calculate();
